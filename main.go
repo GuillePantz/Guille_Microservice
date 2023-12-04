@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/GuillePantz/Guille_Microservice/handlers"
 	"github.com/gorilla/mux"
-	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -35,10 +35,9 @@ func main() {
 	// Define your API endpoints and handlers here
 
 	// Example endpoint
-	router.HandleFunc("/api/hello", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Hello, World!"))
-	})
+	router.HandleFunc("/appointments", func(w http.ResponseWriter, r *http.Request) {
+        handlers.CreateAppointment(w, r, db)
+    }).Methods("POST")
 
 	// Start the web server
 	port := os.Getenv("PORT")

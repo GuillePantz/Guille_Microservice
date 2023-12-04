@@ -1,4 +1,4 @@
-module module github.com/GuillePantz/Guille_Microservice
+module module/github.com/GuillePantz/Guille_Microservice
 
 go 1.19
 

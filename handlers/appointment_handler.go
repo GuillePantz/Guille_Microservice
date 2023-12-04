@@ -6,12 +6,12 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/GuillePantz/Guille_Microservice/models"
 	"github.com/gorilla/mux"
-	"github.com/your_username/your_project/models"
 )
 
 // CreateAppointment creates a new appointment
-func CreateAppointment(w http.ResponseWriter, r *http.Request) {
+func CreateAppointment(w http.ResponseWriter, r *http.Request, db *database.db) {
 	var appointment models.Appointment
 
 	decoder := json.NewDecoder(r.Body)
@@ -23,7 +23,11 @@ func CreateAppointment(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	// Save the appointment to the database (use the database package to interact with the database)
-	// ...
+	err := db.SaveAppointment(appointment)
+    if err != nil {
+        http.Error(w, "Failed to save appointment", http.StatusInternalServerError)
+        return
+    }
 
 	// Return the created appointment
 	w.WriteHeader(http.StatusCreated)
